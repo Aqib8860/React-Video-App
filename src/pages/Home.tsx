@@ -5,19 +5,21 @@ import fetch_all_videos, { Video } from "../utils/api-utils";
 
 export const Home = () => {
     const [allVideos, setVideos] = useState<Video[]>([]);
+    const [searchValue, setSearchValue] = useState<string>("Python+Programming");
     
-    const fetch_videos = async() => {
-        const videos:Video[] = await fetch_all_videos();
+    const fetch_videos = async(search:string) => {
+        const videos:Video[] = await fetch_all_videos(search);
         setVideos(videos);
+        
     }
 
     useEffect(() => {
-        fetch_videos();
-    }, []);
+        fetch_videos(searchValue);
+    }, [searchValue]);
 
     return (
         <div>
-            <Navbar />
+            <Navbar setSearchValue={setSearchValue}/>
             <Videos videos={allVideos}/>
         </div>
     );

@@ -187,31 +187,25 @@ const temp_data = {
         }
     ]
 }
-const fetch_all_videos = async(): Promise<Video[]> => {
-    // const params = {
-    //     "part": "snippet",
-    //     "q": "Python Programming",
-    //     "type": "video",
-    //     "maxResults": 5,
-    //     "key": `${import.meta.env.VITE_YOUTUBE_API_KEY}`
-    // }.toString();
-
-    let search_query = "Python+Programming"
-    let maxResults = 5
+const fetch_all_videos = async(search: string = "Python+Programming"): Promise<Video[]> => {
+    let search_query = search
+    let maxResults = 3
     let key = import.meta.env.VITE_YOUTUBE_API_KEY;
 
     // let url = `https://www.googleapis.com/youtube/v3/search/?${params}`
     let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${search_query}&type=video&maxResults=${maxResults}&key=${key}`
     
     const response = await fetch(url);
-    
+
     let data;
     
     if (response.status != 200){
         data = temp_data;
+        console.log("Default Data is getting Api limit Exceed ", data)
     }
     else {
         data = await response.json();
+        console.log("Response data", data)
     }
     
     // Destructuring the data
@@ -223,7 +217,6 @@ const fetch_all_videos = async(): Promise<Video[]> => {
 
         return {videoId, title, thumbnail, description};
     });
-    console.log("All videos ", all_videos);
 
     return all_videos
 }

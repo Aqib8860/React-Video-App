@@ -1,7 +1,8 @@
 import '../App.css';
+import Search from './Search';
 
 
-const Navbar = () => {
+const Navbar = ({setSearchValue}: {setSearchValue: (value: string) => void }) => {
     
     return (
         <div>
@@ -23,16 +24,7 @@ const Navbar = () => {
                         <a className="nav-link" href="#">Albums</a>
                     </li>
                 </ul>
-                
-                <div className="d-flex">
-                    <input
-                        className="form-control search-box"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                    />
-                    <button className="btn btn-primary">Search</button>
-                </div>
+                <Search setSearchValue={setSearchValue}/>
             </nav>
             <br></br>
         </div>
